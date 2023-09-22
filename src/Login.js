@@ -8,7 +8,6 @@ export default function Login() {
   let userId = document.querySelector('#userId');
 	let passwordForm = document.querySelector('#userPW');
 
-	
 
 	const [inputs, setInputs] = useState({
    		userId: '',
@@ -21,7 +20,6 @@ export default function Login() {
     const nextInputs = { ...inputs,  [name]: value,}//스프레드 문법으로 기존의 객체를 복사한다.
     setInputs(nextInputs);       //만든 변수를 seInput으로 변경해준다.
   }
-
 
     // function CheckPass(str){ //비밀번호 정규식
     //     let reg1 =  /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{6,}$/;
@@ -45,7 +43,8 @@ export default function Login() {
             fetch(URL, { //원하는 주소 입력
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2U2JENmd2cEFjMzJMOTZEWjZvYTYwd3FOLVMxbEtaUFZIdU9OT01UaGRrIn0.eyJleHAiOjE2OTUzNzU0NzQsImlhdCI6MTY5NTM3MTg3NCwianRpIjoiODAxZGI2NWUtZmMwYi00OGUyLWFjN2ItMjM3OWNjM2I0ZDdlIiwiaXNzIjoiaHR0cDovLzE5Mi4xNjguMi4xODY6ODA4MC9yZWFsbXMvZGF0YXBsYXRmb3JtX3NlcnZpY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNGI1MTEwMWItYWQyMy00ODI1LThjNjctZDcyMmY0ZWYzNDI1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWluaW9fY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjUyMGVhYzkzLWFiMTAtNGUyMS05MmY0LWQzNjllZDA0NmNmOSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovLzE5Mi4xNjguMi4xOTM6OTAwMSIsImh0dHA6Ly8xOTIuMTY4LjEuOTI6MTk5OTkiLCJodHRwOi8vMTkyLjE2OC4yLjE5Mzo5MDAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtZGF0YXBsYXRmb3JtX3NlcnZpY2UiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im1pbmlvX2NsaWVudCI6eyJyb2xlcyI6WyJhZG1pbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIG1pbmlvLWF1dGhvcml6YXRpb24iLCJzaWQiOiI1MjBlYWM5My1hYjEwLTRlMjEtOTJmNC1kMzY5ZWQwNDZjZjkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGFlc29vIiwiZ2l2ZW5fbmFtZSI6IiIsImZhbWlseV9uYW1lIjoiIiwiZW1haWwiOiJkYWVzb29AZGF0YW51cmkubmV0IiwicG9saWN5IjpbImNvbnNvbGVBZG1pbiJdfQ.N28DiQrwPlddMhyUmh5OiEDcsrc6B-aCBWQgY8BteR4vHjS1gGNja2S9_60svdjJsBUKnDA4R6jUnnaSiGZNHJgkd-aY_fu4XqnOOeYd2XLlS-UjeU58Qxju8XbHW1Z9i20EdyYXj28nQJAfN7fVjQbceXZHDODqAVgW_Hs-Fx8V9IVmrHLaNp4YQhXlwmxmhq76cB2PpP8vCkI5iowgGd0tMIP39n0WBI50KSqfpcI6SPxI9tXUyMMmwEVK0Oi1EYvKLnTm2BjRX48FyjoARSzo1bT2RQ_4ghI9BJCG1ht0WKnzCId5X100n0s5ER_TIJ_i0vy0ybyM2-gtFZDlhg"
                 },
                 body : JSON.stringify({
                     username : inputs.userId,
@@ -61,6 +60,7 @@ export default function Login() {
                        *  버튼 4개 Create, Get, Delete , Put
                        *  API호출 방법이랑 토큰 사용해서 API만 날리면 어느정도
                        * **/
+                  
                       navigate("/main");
                       console.log(resonse.data);
                     }else{
