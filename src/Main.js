@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState, Component} from "react";
 import { useNavigate } from 'react-router-dom';
-import ApexCharts from 'apexcharts'
+import Table from "./table";
 
 const Main =(props) =>{
   const navigate = useNavigate();
@@ -106,7 +106,27 @@ const Main =(props) =>{
       navigate("/");            
     }
     
+
     
+    const data = [
+      {
+        id: 1,
+        tblSchema: "id1,type1,name1",
+        korSchema: "아이디,타입,이름",
+        typeSchema: "Long, varchar,varchar",
+        tblSchemaComment: "스퀀스1, 데이터베이스 타입1, 데이터베이스 이름",
+      },
+      {
+        id: 2,
+        tblSchema: "id2,type2,name2",
+        korSchema: "아이디,타입,이름",
+        typeSchema: "Long, varchar,varchar",
+        tblSchemaComment: "스퀀스2, 데이터베이스 타입2, 데이터베이스 이름",
+      },
+    ];
+
+  
+
 
     return(
     <>
@@ -115,6 +135,8 @@ const Main =(props) =>{
         <button onClick= {removeUser}>delete</button>
         <button onClick = {modifyUser}>put</button>
         <button onClick = {logout}>logout</button>
+
+        <Table data={data} />
         
     </>
     );
