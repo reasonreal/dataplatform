@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 
 const Table = ({ data }) => {
   const [tableData, setTableData] = useState([]);
-
   useEffect(() => {
     fetchData().then((data) => {      
       setTableData(data);
@@ -16,6 +15,10 @@ const Table = ({ data }) => {
       "/api/v1/table-schema/list?page=1&size=10&direction=ASC&sortType=ID", 
       {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization":  "Bearer " + sessionStorage.getItem("access_token"),
+      }
       });
   
     if (response.status === 200) {

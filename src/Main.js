@@ -1,6 +1,45 @@
-import React, {useState, Component} from "react";
+import React, {useState, Component, useRef, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import Table from "./table";
+import $ from 'jquery';
+import 'datatables.net-dt';
+import 'datatables.net-responsive-dt';
+import 'datatables.net-dt/css/jquery.dataTables.min.css';
+import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
+
+export function DataTable() {
+  const tableRef = useRef();
+
+  useEffect(() => {
+    const table = $(tableRef.current).DataTable({
+      ajax: {
+        type: 'GET',
+        url: '/api/v1/table-schema/list?page=1&size=10&direction=ASC&sortType=ID',
+        dataType: 'json',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":  "Bearer " + sessionStorage.getItem("access_token"),
+        }
+      },
+      columns: [
+        { data: 'name', title: 'Name' },
+        { data: 'position', title: 'Position' },
+        { data: 'office', title: 'Office' },
+        { data: 'extn', title: 'Extn.' },
+        { data: 'startDate', title: 'Start date' },
+        { data: 'salary', title: 'Salary' },
+      ],
+      responsive: true, // 반응형 켜기
+    });
+    // 언마운트 시 destroy.
+    console.log('aa');
+    return () => {
+      table.destroy();
+    };
+  }, []);
+
+  return <table ref={tableRef} style={{ width: '100%' }}></table>;
+}
 
 const Main =(props) =>{
   const navigate = useNavigate();
@@ -17,6 +56,7 @@ const Main =(props) =>{
         });
     
         if (response.status === 200) {
+          DataTable();
           const data = await response.json();
           console.log(data);
         } else {
@@ -105,6 +145,7 @@ const Main =(props) =>{
       console.log("로그아웃");
       navigate("/");            
     }
+
     
 
     
@@ -135,8 +176,6 @@ const Main =(props) =>{
         <button onClick= {removeUser}>delete</button>
         <button onClick = {modifyUser}>put</button>
         <button onClick = {logout}>logout</button>
-
-        <Table data={data} />
         
     </>
     );
