@@ -52,50 +52,8 @@ const Table = ({ data }) => {
     </table>
 
   
-  );
+  )
 };
 
 
-
 export default Table;
-
-
-
-
-
-
-// const list = [
-//   {
-//     "id": 3,
-//     "tblSchema": "id2,type2,name2",
-//     "korSchema": "아이디,타입,이름",
-//     "typeSchema": "Long, varchar,varchar",
-//     "tblSchemaComment": "스퀀스2, 데이터베이스 타입2, 데이터베이스 이름"
-//   }, 
-//   {
-//     "id": 4,
-//     "tblSchema": "id,type,name",
-//     "korSchema": "아이디,타입,이름",
-//     "typeSchema": "Long, varchar,varchar",
-//     "tblSchemaComment": "스퀀스, 데이터베이스 타입, 데이터베이스 이름"
-//   },
-//   {
-//     "id": 5,
-//     "tblSchema": "id,type,name",
-//     "korSchema": "아이디,타입,이름",
-//     "typeSchema": "Long, varchar,varchar",
-//     "tblSchemaComment": "스퀀스, 데이터베이스 타입, 데이터베이스 이름"
-//   },
-//   {
-//     "id": 6,
-//     "tblSchema": "id,type,name",
-//     "korSchema": "아이디,타입,이름",
-//     "typeSchema": "Long, varchar,varchar",
-//     "tblSchemaComment": "스퀀스, 데이터베이스 타입, 데이터베이스 이름"
-//   },
-
-// ]
-
-// export function getList() {
-//   return list;
-// }

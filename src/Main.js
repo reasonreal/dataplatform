@@ -1,47 +1,11 @@
-import React, {useState, Component, useRef, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import Table from "./table";
-import $ from 'jquery';
-import 'datatables.net-dt';
-import 'datatables.net-responsive-dt';
-import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
+import DataTable from "./component/dataTable";
+import './css/table.css';
 
-export function DataTable() {
-  const tableRef = useRef();
 
-  useEffect(() => {
-    const table = $(tableRef.current).DataTable({
-      ajax: {
-        type: 'GET',
-        url: '/api/v1/table-schema/list?page=1&size=10&direction=ASC&sortType=ID',
-        dataType: 'json',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization":  "Bearer " + sessionStorage.getItem("access_token"),
-        }
-      },
-      columns: [
-        { data: 'name', title: 'Name' },
-        { data: 'position', title: 'Position' },
-        { data: 'office', title: 'Office' },
-        { data: 'extn', title: 'Extn.' },
-        { data: 'startDate', title: 'Start date' },
-        { data: 'salary', title: 'Salary' },
-      ],
-      responsive: true, // 반응형 켜기
-    });
-    // 언마운트 시 destroy.
-    console.log('aa');
-    return () => {
-      table.destroy();
-    };
-  }, []);
-
-  return <table ref={tableRef} style={{ width: '100%' }}></table>;
-}
-
-const Main =(props) =>{
+const Main = (props) =>{
   const navigate = useNavigate();
   
     const getUser = async () => {      // GET요청
@@ -146,29 +110,96 @@ const Main =(props) =>{
       navigate("/");            
     }
 
-    
 
-    
-    const data = [
-      {
-        id: 1,
-        tblSchema: "id1,type1,name1",
-        korSchema: "아이디,타입,이름",
-        typeSchema: "Long, varchar,varchar",
-        tblSchemaComment: "스퀀스1, 데이터베이스 타입1, 데이터베이스 이름",
-      },
-      {
-        id: 2,
-        tblSchema: "id2,type2,name2",
-        korSchema: "아이디,타입,이름",
-        typeSchema: "Long, varchar,varchar",
-        tblSchemaComment: "스퀀스2, 데이터베이스 타입2, 데이터베이스 이름",
-      },
-    ];
+    ///
 
+    const Table = () => {
+      const [data, setData] = useState([]);
+        useEffect(() => {
+        fetchData().then((data) => {
+          setData(data);
+        });
+      }, []);
+    
+    
   
+    const fetchData = async () => {
+      const response = await fetch(
+        "/api/v1/table-schema/list?page=1&size=10&direction=ASC&sortType=ID",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization":  "Bearer " + sessionStorage.getItem("access_token"),
+          }
+        });
+    
+      if (response.status === 200) {
+        const data = await response.json();
+        return data;
+      } else {
+        throw new Error("API 호출 실패");
+      }
+    };
 
 
+    const headers = [
+      {
+        text: 'ID',
+        value: 'id'
+      },
+      {
+        text: 'TblSchema',
+        value: 'tblSchema'
+      },
+      {
+        text: 'KorSchema',
+        value: 'korSchema'
+      },
+      {
+        text: 'TypeSchema',
+        value: 'typeSchema'
+      },
+      {
+        text: 'TblSchemaComment',
+        value: 'tblSchemaComment'
+      }
+    ];
+    
+    let key1 = Object.keys(headers);
+    console.log(key1);
+  
+    console.log(Object.keys(headers));
+
+    const items = [
+      {
+        id: '3',
+        tblSchema: 'id3,type3,name3',
+        korSchema: '아이디,타입,이름',
+        typeSchema: 'Long, varchar,varchar',
+        tblSchemaComment: '스퀀스, 데이터베이스 타입, 데이터베이스 이름'
+      },
+      {
+        id: '4',
+        tblSchema: 'id,type,name',
+        korSchema: '아이디,타입,이름',
+        typeSchema: 'Long, varchar,varchar',
+        tblSchemaComment: '스퀀스, 데이터베이스 타입, 데이터베이스 이름'
+      },
+      
+    ];    
+    
+
+    //
+    
+
+    const [selection, setSelection] = useState([]);
+    useEffect(() => {
+      console.log(selection);
+    }, [selection]);
+
+    }
+ 
     return(
     <>
         <button onClick = {getUser}>get</button>
@@ -176,6 +207,17 @@ const Main =(props) =>{
         <button onClick= {removeUser}>delete</button>
         <button onClick = {modifyUser}>put</button>
         <button onClick = {logout}>logout</button>
+        
+        <div className="App">
+          <DataTable 
+            // data = {data}
+
+            headers={headers} 
+            items={items} 
+            selectable={true} 
+            updateSelection={setSelection}
+          />
+        </div>
         
     </>
     );
