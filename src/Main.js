@@ -8,8 +8,30 @@ const Main = (props) => {
     const navigate = useNavigate();
     const [loadingTable, setLoadingTable] = useState(true);
 
+        // 지정 id get
+    // const getUser = async () => {      // GET요청
+    //     // console.log(sessionStorage.getItem("access_token"))
+    //     const response = await fetch("/api/v1/table-schema?id=3", {
+    //         method: 'GET',
+    //         credentials: "include",
+    //         headers: {
+    //             'content-type': 'application/json',
+    //             "Authorization": "Bearer " + sessionStorage.getItem("access_token")
+    //         },
+    //     });
+
+    //     if (response.status === 200) {
+    //         const data = await response.json();
+    //         console.log(data);
+    //     } else {
+    //         const error = await response.json();
+    //         console.log(error);
+    //     }
+    // }
+
+    
+        // checkbox 누르면 해당 row data get
     const getUser = async (id) => {      // GET요청
-        // console.log(sessionStorage.getItem("access_token"))
         const response = await fetch("/api/v1/table-schema?id="+id, {
             method: 'GET',
             credentials: "include",
@@ -20,7 +42,6 @@ const Main = (props) => {
         });
 
         if (response.status === 200) {
-            // DataTable();
             const data = await response.json();
             console.log(data);
         } else {
@@ -28,6 +49,7 @@ const Main = (props) => {
             console.log(error);
         }
     }
+
 
 
     const registUser = async () => {       // Post 요청
@@ -158,16 +180,19 @@ const Main = (props) => {
     };
 
 
+
     const [selection, setSelection] = useState([]);
       useEffect(() => {
-        console.log(selection);                 // id값 
-        console.log(getUser(selection));        // check한 값 get 
+        console.log('selection : {}',selection);
+        // console.log(getUser(selection));        // check한 값 get 
         // console.log(data.items);                // items 전체
-    }, [selection]);                            // [바뀌는 값]
+        // console.log('data.items : ',data.items[selection]);      //??
 
-    
-
-    ///
+        // if(selection.length != 0){
+        //     console.log(getUser(data.items[selection.length-1].id));    // (check갯수)번째 값 
+        // }
+    }, [selection]);                        
+      
 
 
     /** 먼저 체크박스 셀렉션 말고
@@ -177,9 +202,12 @@ const Main = (props) => {
      */  
 
 
+    
+
     return (
         <>
-            
+            {/* <button onClick={handleGet}>getdata</button>     */}
+
             <button onClick={getUser}>get</button>
             <button onClick={registUser}>Create</button>
             <button onClick={removeUser}>delete</button>
@@ -195,6 +223,8 @@ const Main = (props) => {
                 
                 />}
             </div>
+
+            
 
         </>
     );

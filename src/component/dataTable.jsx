@@ -22,16 +22,6 @@ export default function DataTable(
     //단일 행 선택
     const [selection, setSelection] = useState(new Set());   // 선택한 row의 itemKey를 담은 배열
     
-    ///
-
-    
-    // const onChangeSelection = (selection) => {
-    //     setSelection(selection);
-    //   };
-    
-    //   // 선택한 행의 데이터를 조회
-    //   const selectedData = items.filter((item) => selection.includes(item[itemKey]));
-    ///
     
     const onChangeSelect = (value) => {
         // 기존의 selection으로 새로운 Set 생성
