@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import DataTable from "./component/dataTable";
 import './css/table.css';
+import Post from './Post';
 
 
 const Main = (props) => {
@@ -224,7 +225,9 @@ const Main = (props) => {
                 />}
             </div>
 
-            
+            <Post>
+
+            </Post>
 
         </>
     );
