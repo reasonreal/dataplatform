@@ -61,12 +61,13 @@ export default function DataTable(
     };
 
 
-
-
     return (
+        // m-5: margin: 1.25rem; /* 20px */
+        <div className = 'm-5'> 
+        
         <table>
             <thead>
-            <tr>
+                <tr>
                 {
                     selectable &&
                     <th>
@@ -84,8 +85,9 @@ export default function DataTable(
                         </th>
                     )
                 }
-            </tr>
+                </tr>
             </thead>
+            
             <tbody>
             {
                 items.map((item, index) => (
@@ -93,9 +95,8 @@ export default function DataTable(
                         key={index}
                         className={
                             `
-                ${selection.has(item[itemKey]) ? 'select_row' : ''} 
-                ${item.disabled ? 'disabled_row' : ''}
-              `
+                        ${selection.has(item[itemKey]) ? 'select_row' : ''} 
+                        ${item.disabled ? 'disabled_row' : ''}      `         
                         }>
                         {/* headerKey를 순회하면서 key를 가져옴 */}
                         {
@@ -120,6 +121,10 @@ export default function DataTable(
                 ))
             }
             </tbody>
+
         </table>
+        
+        </div>
+        
     )
 }

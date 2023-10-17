@@ -1,8 +1,9 @@
+import './css/table.css';
 import React, {useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import DataTable from "./component/dataTable";
-import './css/table.css';
 import Post from './Post';
+import "tailwindcss/tailwind.css";
 
 
 const Main = (props) => {
@@ -160,7 +161,7 @@ const Main = (props) => {
 
     const fetchData = async () => {
         const response = await fetch(
-            "/api/v1/table-schema/list?page=1&size=5&direction=ASC&sortType=ID",
+            "/api/v1/table-schema/list?page=1&size=5&direction=DESC&sortType=ID",
             {
                 method: "GET",
                 headers: {
@@ -203,18 +204,47 @@ const Main = (props) => {
      */  
 
 
-    
+    //
+    const [isBoxVisible, setIsBoxVisible] = useState(false);
+
+    const handleClick = () => {
+      setIsBoxVisible(!isBoxVisible);
+    };
+
 
     return (
         <>
-            {/* <button onClick={handleGet}>getdata</button>     */}
+            <div className="crud">
+                <div className='text-l font-bold mt-5 mb-2 text-center'> Edit </div>
 
-            <button onClick={getUser}>get</button>
-            <button onClick={registUser}>Create</button>
-            <button onClick={removeUser}>delete</button>
-            <button onClick={logout}>logout</button>
-            <button onClick={modifyUser}>put</button>
+                <button onClick={getUser} className="rounded-xl bg-red-500 px-3 py-0.5 text-base font-s text-white 
+                transition duration-200 hover:bg-red-600 active:bg-red-700 dark:bg-red-400 dark:text-white 
+                dark:hover:bg-red-300 dark:active:bg-red-200">
+                get</button>
+        
+                <button onClick={registUser} className="rounded-xl bg-yellow-500 px-3 py-0.5 text-base font-s text-white 
+                transition duration-200 hover:bg-yellow-600 active:bg-yellow-700 dark:bg-yellow-400 dark:text-white 
+                dark:hover:bg-yellow-300 dark:active:bg-yellow-200">
+                Create</button>
+        
+                <button onClick={removeUser} className="rounded-xl bg-green-500 px-3 py-0.5 text-base font-s text-white 
+                transition duration-200 hover:bg-green-600 active:bg-green-700 dark:bg-green-400 dark:text-white 
+                dark:hover:bg-green-300 dark:active:bg-green-200"> 
+                delete</button>
+        
+                <button onClick={modifyUser} className="rounded-xl bg-blue-500 px-3 py-0.5 text-base font-s text-white 
+                transition duration-200 hover:bg-blue-600 active:bg-blue-700 dark:bg-blue-400 dark:text-white 
+                dark:hover:bg-blue-300 dark:active:bg-blue-200">
+                put</button>
             
+                <button onClick={logout} className="rounded-xl bg-purple-500 px-3 py-0.5 text-base font-s text-white 
+                transition duration-200 hover:bg-purple-600 active:bg-purple-700 dark:bg-purple-400 dark:text-white 
+                dark:hover:bg-purple-300 dark:active:bg-purple-200">
+                logout</button>
+
+            </div>
+            
+            {/* 테이블 */}
             <div className="App">
                 {loadingTable?"Loading...":<DataTable
                     headers={data.headers}
@@ -224,10 +254,17 @@ const Main = (props) => {
                 
                 />}
             </div>
+            
+            {/* 데이터 추가 버튼 */}
+            <div>
+              <button onClick={handleClick}  className="rounded-xl bg-navy-700 px-5 py-3 text-base font-medium text-white 
+              transition duration-200 hover:bg-navy-800 active:bg-navy-900 dark:bg-white/10 dark:text-white 
+              dark:hover:bg-white/20 dark:active:bg-white/30">
+                데이터 추가하기</button>
+              {isBoxVisible && <Post />}
+            </div>
 
-            <Post>
-
-            </Post>
+                 
 
         </>
     );
